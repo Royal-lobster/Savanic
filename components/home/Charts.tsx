@@ -26,9 +26,10 @@ const Charts = ({ data }: { data: Chart[] }) => (
           style={{
             textDecoration: 'none',
             color: 'inherit',
+            height: '100%',
           }}
         >
-          <Card key={chart.id}>
+          <Card key={chart.id} h="100%">
             <Card.Section mb={10} sx={{ position: 'relative', height: 180 }}>
               <Image
                 src={getImageSrc(chart.image, ImageSize.LARGE) as string}
