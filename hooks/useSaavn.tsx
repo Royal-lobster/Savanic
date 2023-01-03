@@ -13,6 +13,7 @@ export enum PathOptions {
   songs = 'songs',
   playlists = 'playlists',
   searchAll = 'search/all',
+  None = '',
 }
 
 type Data<T extends PathOptions> = T extends PathOptions.modules
@@ -25,11 +26,13 @@ type Data<T extends PathOptions> = T extends PathOptions.modules
   ? AlbumData
   : T extends PathOptions.searchAll
   ? SearchAllData
+  : T extends PathOptions.None
+  ? never
   : never;
 
 const useSaavn = <T extends PathOptions>(path: T, queries: Record<string, string>) => {
   const { data, error, isLoading } = useSWR(
-    urlcat('https://savanic-backend.vercel.app/', path, queries),
+    path === PathOptions.None ? null : urlcat('https://savanic-backend.vercel.app/', path, queries),
     fetcher
   );
   return {

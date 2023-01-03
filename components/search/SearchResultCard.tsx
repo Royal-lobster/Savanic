@@ -1,9 +1,16 @@
 import { Text, Flex, Stack, Badge } from '@mantine/core';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
 import { Result } from '../../types/searchAll';
+import useSaavn, { PathOptions } from '../../hooks/useSaavn';
+import { usePlayerStore } from '../../state/player';
 
 export const SearchResultCard = ({ result }: { result: Result }) => {
+  const queryPath = result.type === 'song' ? PathOptions.songs : PathOptions.None;
+  const setSongData = usePlayerStore((state) => state.setSongData);
+  const { data } = useSaavn(queryPath, { id: result.id });
+  const router = useRouter();
   const badgeColor = (type: string) => {
     switch (type) {
       case 'song':
@@ -18,6 +25,24 @@ export const SearchResultCard = ({ result }: { result: Result }) => {
         return 'gray';
     }
   };
+
+  const handleResultClick = () => {
+    switch (result.type) {
+      case 'song':
+        setSongData(data[0]);
+        break;
+      case 'playlist':
+        router.push(`/playlist/${result.id}`);
+        break;
+      case 'album':
+        router.push(`/album/${result.id}`);
+        break;
+      case 'artist':
+        router.push(`/artist/${result.id}`);
+        break;
+    }
+  };
+
   return (
     <Flex
       sx={(theme) => ({
@@ -28,6 +53,7 @@ export const SearchResultCard = ({ result }: { result: Result }) => {
       align="center"
       justify="space-between"
       key={result.id}
+      onClick={handleResultClick}
     >
       <Flex gap={20} align="center">
         <Image

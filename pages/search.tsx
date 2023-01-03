@@ -6,7 +6,7 @@ import useSaavn, { PathOptions } from '../hooks/useSaavn';
 import { SearchResultCard } from '../components/search/SearchResultCard';
 import { Result } from '../types/searchAll';
 
-const SearchView = ({ results, title }: { results: Result[]; title: string }) => (
+const SearchSection = ({ results, title }: { results: Result[]; title: string }) => (
   <>
     <Title mt={20} order={2}>
       {title}
@@ -48,15 +48,17 @@ const search = () => {
       {data.topQuery.results.map((result) => (
         <SearchResultCard result={result} />
       ))}
-      {data.songs.results.length !== 0 && <SearchView results={data.songs.results} title="Songs" />}
+      {data.songs.results.length !== 0 && (
+        <SearchSection results={data.songs.results} title="Songs" />
+      )}
       {data.artists.results.length !== 0 && (
-        <SearchView results={data.artists.results} title="Artists" />
+        <SearchSection results={data.artists.results} title="Artists" />
       )}
       {data.albums.results.length !== 0 && (
-        <SearchView results={data.albums.results} title="Albums" />
+        <SearchSection results={data.albums.results} title="Albums" />
       )}
       {data.playlists.results.length !== 0 && (
-        <SearchView results={data.playlists.results} title="Playlists" />
+        <SearchSection results={data.playlists.results} title="Playlists" />
       )}
     </Stack>
   );
