@@ -5,22 +5,22 @@ import { NextLink } from '@mantine/next';
 import { Album } from '../../types/modules';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
 
-const Albums = ({ data }: { data: Album[] }) => {
-  console.log(data);
-  return (
-    <Carousel
-      withIndicators
-      height={200}
-      slideSize="33.333333%"
-      slideGap="md"
-      breakpoints={[
-        { maxWidth: 'md', slideSize: '50%' },
-        { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
-      ]}
-      loop
-      align="start"
-    >
-      {data.map((album) => (
+const Albums = ({ data }: { data: Album[] }) => (
+  <Carousel
+    withIndicators
+    height={200}
+    slideSize="33.333333%"
+    slideGap="md"
+    breakpoints={[
+      { maxWidth: 'md', slideSize: '50%' },
+      { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
+    ]}
+    loop
+    align="start"
+  >
+    {data
+      .filter((d) => /(^\d{8}$)/.test(d.id))
+      .map((album) => (
         <Carousel.Slide key={album.id} sx={{ position: 'relative' }}>
           <NextLink href={`/album/${album.id}`} style={{ height: '100%', textDecoration: 'none' }}>
             <BackgroundImage
@@ -50,8 +50,7 @@ const Albums = ({ data }: { data: Album[] }) => {
           </NextLink>
         </Carousel.Slide>
       ))}
-    </Carousel>
-  );
-};
+  </Carousel>
+);
 
 export default Albums;

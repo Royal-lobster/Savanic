@@ -28,6 +28,7 @@ const TrendingCard = ({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       borderRadius: theme.radius.sm,
       overflow: 'hidden',
+      cursor: 'pointer',
     })}
     gap={10}
     onClick={onClick}
@@ -99,16 +100,18 @@ const Trending = ({ data }: { data: Trending }) => {
           <TrendingSongCard song={song} />
         ))}
 
-        {data.albums.map((album) => (
-          <TrendingCard
-            key={album.id}
-            imgSrc={getImageSrc(album.image, ImageSize.LARGE) as string}
-            title={album.name}
-            subtitle={album.artists.map((artist) => artist.name).join(', ')}
-            onClick={() => router.push(`/album/${album.id}`)}
-            isAlbum
-          />
-        ))}
+        {data.albums
+          .filter((d) => /(^\d{8}$)/.test(d.id))
+          .map((album) => (
+            <TrendingCard
+              key={album.id}
+              imgSrc={getImageSrc(album.image, ImageSize.LARGE) as string}
+              title={album.name}
+              subtitle={album.artists.map((artist) => artist.name).join(', ')}
+              onClick={() => router.push(`/album/${album.id}`)}
+              isAlbum
+            />
+          ))}
       </SimpleGrid>
     </Box>
   );
