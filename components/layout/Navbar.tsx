@@ -12,6 +12,7 @@ import {
 import { NextLink } from '@mantine/next';
 import { IconLanguage, IconMusic, IconSearch } from '@tabler/icons';
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useMusicLanguageStore } from '../../state/musicLanguage';
 
 const useStyles = createStyles((theme) => ({
@@ -35,7 +36,7 @@ const useStyles = createStyles((theme) => ({
 const Navbar = () => {
   const { classes } = useStyles();
   const musicLanguages = useMusicLanguageStore((state) => state.languages);
-
+  const router = useRouter();
   const languagesList = [
     'Hindi',
     'English',
@@ -74,6 +75,7 @@ const Navbar = () => {
           w="100%"
           mx={20}
           maw={500}
+          onChange={(e) => router.push(`/search?q=${e.target.value}`)}
           display={{ base: 'none', xs: 'block' }}
           placeholder="Search Music"
         />
@@ -105,6 +107,7 @@ const Navbar = () => {
           mx="auto"
           maw={500}
           display={{ base: 'block', xs: 'none' }}
+          onChange={(e) => router.push(`/search?q=${e.target.value}`)}
           placeholder="Search Music"
         />
       </Box>
