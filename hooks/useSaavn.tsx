@@ -24,7 +24,10 @@ type Data<T extends PathOptions> = T extends PathOptions.modules
   : never;
 
 const useSaavn = <T extends PathOptions>(path: T, queries: Record<string, string>) => {
-  const { data, error, isLoading } = useSWR(urlcat('https://saavn.me/', path, queries), fetcher);
+  const { data, error, isLoading } = useSWR(
+    urlcat('https://savanic-backend.vercel.app/', path, queries),
+    fetcher
+  );
   return {
     data: data?.data as Data<T>,
     isLoading,

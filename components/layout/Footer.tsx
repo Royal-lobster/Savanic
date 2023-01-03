@@ -35,10 +35,7 @@ const Footer = () => {
           <a className={classes.descriptionLink} href="https://www.jiosaavn.com/">
             Jio Savan
           </a>{' '}
-          from{' '}
-          <a className={classes.descriptionLink} href="https://saavn.me/">
-            Unofficial API
-          </a>
+          from Unofficial API
         </Text>
       </Stack>
     </Box>

@@ -21,7 +21,10 @@ const useStyles = createStyles((theme) => ({
     }`,
     alignContent: 'center',
     justifyContent: 'center',
-    paddingBottom: 20,
+    paddingBottom: 0,
+    '@media (max-width: 580px)': {
+      paddingBottom: 20,
+    },
   },
   navContainer: {
     maxWidth: 1200,
@@ -95,14 +98,16 @@ const Navbar = () => {
           </Popover.Dropdown>
         </Popover>
       </Flex>
-      <Input
-        icon={<IconSearch size={20} />}
-        w="90%"
-        mx={20}
-        maw={500}
-        display={{ base: 'block', xs: 'none' }}
-        placeholder="Search Music"
-      />
+      <Box>
+        <Input
+          icon={<IconSearch size={20} />}
+          w="90%"
+          mx="auto"
+          maw={500}
+          display={{ base: 'block', xs: 'none' }}
+          placeholder="Search Music"
+        />
+      </Box>
     </Box>
   );
 };

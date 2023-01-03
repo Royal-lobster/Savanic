@@ -1,5 +1,5 @@
-import React from 'react';
-import { ActionIcon, Box, Flex, Text } from '@mantine/core';
+import React, { useEffect, useMemo } from 'react';
+import { ActionIcon, Box, Flex, Slider, Text } from '@mantine/core';
 import Image from 'next/image';
 import {
   IconPlayerPause,
@@ -9,10 +9,50 @@ import {
 } from '@tabler/icons';
 import { usePlayerStore } from '../../state/player';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
+import { getAudioSrc } from '../../utils/getAudioSrc';
 
 const PlayerPreview = () => {
+  const [progress, setProgress] = React.useState(0);
   const isPaused = usePlayerStore((state) => state.isPaused);
+  const setIsPaused = usePlayerStore((state) => state.setIsPaused);
   const data = usePlayerStore((state) => state.songData);
+
+  const audioPlayer = useMemo(() => {
+    if (!data) return null;
+    const audioSrc = getAudioSrc(data.downloadUrl);
+    return new Audio(audioSrc);
+  }, [data]);
+
+  useEffect(() => {
+    if (audioPlayer) {
+      setProgress(0);
+      setIsPaused(false);
+      audioPlayer.currentTime = 0;
+
+      audioPlayer.ontimeupdate = () => setProgress(audioPlayer.currentTime);
+      audioPlayer.play();
+    }
+    return () => audioPlayer?.pause();
+  }, [audioPlayer]);
+
+  const onPrev = () => {
+    throw new Error('Not implemented');
+  };
+
+  const onNext = () => {
+    throw new Error('Not implemented');
+  };
+
+  const onPlayToggle = () => {
+    if (isPaused) {
+      setIsPaused(false);
+      audioPlayer?.play();
+    } else {
+      setIsPaused(true);
+      audioPlayer?.pause();
+    }
+  };
+
   if (!data) return null;
 
   return (
@@ -57,15 +97,29 @@ const PlayerPreview = () => {
           </Box>
         </Flex>
         <Flex mx={20}>
-          <ActionIcon>
+          <ActionIcon onClick={onPrev}>
             <IconPlayerTrackPrev />
           </ActionIcon>
-          <ActionIcon>{isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}</ActionIcon>
-          <ActionIcon>
+          <ActionIcon onClick={onPlayToggle}>
+            {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
+          </ActionIcon>
+          <ActionIcon onClick={onNext}>
             <IconPlayerTrackNext />
           </ActionIcon>
         </Flex>
       </Flex>
+      <Slider
+        label={null}
+        value={progress}
+        min={0}
+        max={audioPlayer?.duration}
+        onChange={(e) => {
+          if (audioPlayer) audioPlayer.currentTime = e;
+          setProgress(e);
+        }}
+        mt={10}
+        size="xs"
+      />
     </Box>
   );
 };

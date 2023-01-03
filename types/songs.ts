@@ -18,7 +18,7 @@ export interface SongData {
   featuredArtists: string;
   featuredArtistsId: string;
   explicitContent: number;
-  playCount: number;
+  playCount: string;
   language: string;
   hasLyrics: string;
   url: string;

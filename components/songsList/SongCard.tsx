@@ -26,7 +26,7 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
       <Text
         sx={(theme) => ({
           flex: 0.2,
-          '@media (max-width: 755px)': {
+          '@media (max-width: 580px)': {
             flex: 0.3,
           },
           display: 'flex',
@@ -48,8 +48,8 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
       <Stack
         spacing={0}
         sx={{
-          flex: 1,
-          '@media (max-width: 755px)': {
+          flex: 0.8,
+          '@media (max-width: 580px)': {
             flex: 2,
           },
         }}
@@ -87,17 +87,18 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
       >
         {song.primaryArtists}
       </Text>
-      <Text
+      <Flex
         sx={{
-          flex: 1,
-          '@media (max-width: 755px)': {
+          flex: 0.7,
+          alignItems: 'center',
+          justifyContent: 'end',
+          '@media (max-width: 580px)': {
             flex: 0.2,
           },
-          textAlign: 'right',
         }}
       >
-        {(Number(song.duration) / 60).toFixed(2)}
-      </Text>
+        <Text sx={{ textAlign: 'right' }}>{(Number(song.duration) / 60).toFixed(2)}</Text>
+      </Flex>
     </Flex>
   );
 };
