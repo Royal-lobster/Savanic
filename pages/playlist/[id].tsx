@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import useSaavn, { PathOptions } from '../../hooks/useSaavn';
 import SongsList from '../../components/songsList';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
-import Loading from '../../components/layout/loading';
+import Loading from '../../components/layout/Loading';
 
 const AlbumPage = () => {
   const router = useRouter();

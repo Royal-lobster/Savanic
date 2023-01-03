@@ -5,7 +5,7 @@ import { shortenText } from '../utils/shortenText';
 import useSaavn, { PathOptions } from '../hooks/useSaavn';
 import { SearchResultCard } from '../components/search/SearchResultCard';
 import { Result } from '../types/searchAll';
-import Loading from '../components/layout/loading';
+import Loading from '../components/layout/Loading';
 
 const SearchSection = ({ results, title }: { results: Result[]; title: string }) => (
   <>

@@ -4,7 +4,7 @@ import Charts from '../components/home/Charts';
 import Trending from '../components/home/Trending';
 import { useMusicLanguageStore } from '../state/musicLanguage';
 import Albums from '../components/home/Albums';
-import Loading from '../components/layout/loading';
+import Loading from '../components/layout/Loading';
 
 export default function HomePage() {
   const musicLanguages = useMusicLanguageStore((state) => state.languages);
