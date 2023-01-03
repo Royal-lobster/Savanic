@@ -1,12 +1,14 @@
-import { Text, Flex, Stack, Badge } from '@mantine/core';
+import { Text, Flex, Stack, Badge, Loader } from '@mantine/core';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
 import { Result } from '../../types/searchAll';
 import useSaavn, { PathOptions } from '../../hooks/useSaavn';
 import { usePlayerStore } from '../../state/player';
+import { shortenText } from '../../utils/shortenText';
 
 export const SearchResultCard = ({ result }: { result: Result }) => {
+  const isCurrent = usePlayerStore((state) => state.songData?.id) === result.id;
   const queryPath = result.type === 'song' ? PathOptions.songs : PathOptions.None;
   const setSongData = usePlayerStore((state) => state.setSongData);
   const { data } = useSaavn(queryPath, { id: result.id });
@@ -46,7 +48,7 @@ export const SearchResultCard = ({ result }: { result: Result }) => {
   return (
     <Flex
       sx={(theme) => ({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
+        border: `1px solid ${theme.colors.gray[9]}`,
         borderRadius: theme.radius.sm,
         overflow: 'hidden',
       })}
@@ -65,8 +67,14 @@ export const SearchResultCard = ({ result }: { result: Result }) => {
           height={80}
         />
         <Stack maw="75%" spacing={0}>
-          <Text size="lg" dangerouslySetInnerHTML={{ __html: result.title }} />
-          <Text size="sm" dangerouslySetInnerHTML={{ __html: result.description }} />
+          <Flex gap={10}>
+            {isCurrent && <Loader p={0} m={0} variant="bars" size="xs" />}
+            <Text size="lg" dangerouslySetInnerHTML={{ __html: shortenText(result.title, 40) }} />
+          </Flex>
+          <Text
+            size="sm"
+            dangerouslySetInnerHTML={{ __html: shortenText(result.description, 40) }}
+          />
         </Stack>
       </Flex>
       <Badge
@@ -75,7 +83,7 @@ export const SearchResultCard = ({ result }: { result: Result }) => {
         }}
         mr={20}
         color={badgeColor(result.type)}
-        variant="outline"
+        variant="dot"
       >
         {result.type}
       </Badge>

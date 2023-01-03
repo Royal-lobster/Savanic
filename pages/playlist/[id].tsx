@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 import useSaavn, { PathOptions } from '../../hooks/useSaavn';
 import SongsList from '../../components/songsList';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
+import Loading from '../../components/layout/loading';
 
 const AlbumPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading, isError } = useSaavn(PathOptions.playlists, { id: id as string });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>Error</div>;
 
   return (

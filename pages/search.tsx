@@ -1,17 +1,24 @@
-import { Divider, Title, Stack, SimpleGrid } from '@mantine/core';
+import { Title, Stack, SimpleGrid } from '@mantine/core';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { shortenText } from '../utils/shortenText';
 import useSaavn, { PathOptions } from '../hooks/useSaavn';
 import { SearchResultCard } from '../components/search/SearchResultCard';
 import { Result } from '../types/searchAll';
+import Loading from '../components/layout/loading';
 
 const SearchSection = ({ results, title }: { results: Result[]; title: string }) => (
   <>
-    <Title mt={20} order={2}>
+    <Title
+      sx={(theme) => ({
+        borderBottom: `1px solid ${theme.colors.gray[9]}`,
+        paddingBottom: theme.spacing.md,
+      })}
+      mt={20}
+      order={2}
+    >
       {title}
     </Title>
-    <Divider />
     <SimpleGrid
       cols={2}
       breakpoints={[
@@ -36,7 +43,7 @@ const search = () => {
 
   const { data, isLoading, isError } = useSaavn(PathOptions.searchAll, { query: q as string });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>Error</div>;
   if (!data) return null;
 
