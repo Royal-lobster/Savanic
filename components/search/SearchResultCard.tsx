@@ -1,6 +1,6 @@
-import { Text, Flex, Stack, Badge, Loader } from '@mantine/core';
-import Image from 'next/image';
+import { Text, Flex, Stack, Badge, LoadingOverlay, Box } from '@mantine/core';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
 import { Result } from '../../types/searchAll';
 import useSaavn, { PathOptions } from '../../hooks/useSaavn';
@@ -58,17 +58,23 @@ export const SearchResultCard = ({ result }: { result: Result }) => {
       onClick={handleResultClick}
     >
       <Flex gap={20} align="center">
-        <Image
-          style={{
-            flexShrink: 0,
-          }}
-          src={getImageSrc(result.image, ImageSize.MEDIUM) as string}
-          width={80}
-          height={80}
-        />
-        <Stack maw="75%" spacing={0}>
+        <Box sx={{ position: 'relative' }}>
+          <LoadingOverlay
+            loaderProps={{ variant: 'bars', size: 'sm' }}
+            visible={isCurrent}
+            overlayBlur={2}
+          />
+          <Box h="80px" w="80px" sx={{ flexShrink: 0 }}>
+            <Image
+              height="80px"
+              width="80px"
+              objectFit="cover"
+              src={getImageSrc(result.image, ImageSize.MEDIUM) as string}
+            />
+          </Box>
+        </Box>
+        <Stack spacing={0}>
           <Flex gap={10}>
-            {isCurrent && <Loader p={0} m={0} variant="bars" size="xs" />}
             <Text size="lg" dangerouslySetInnerHTML={{ __html: shortenText(result.title, 40) }} />
           </Flex>
           <Text

@@ -8,6 +8,6 @@ module.exports = withBundleAnalyzer({
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['c.saavncdn.com', 'c.sop.saavncdn.com', 'www.jiosaavn.com'],
+    domains: ['c.saavncdn.com', 'c.sop.saavncdn.com', 'pli.saavncdn.com', 'www.jiosaavn.com'],
   },
 });
