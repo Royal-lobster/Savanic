@@ -38,6 +38,9 @@ const PlayerPreview = () => {
             <Text
               sx={{
                 maxWidth: '200px',
+                '@media (max-width: 755px)': {
+                  maxWidth: '140px',
+                },
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
