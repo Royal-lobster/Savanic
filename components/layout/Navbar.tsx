@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Flex,
   Input,
@@ -7,6 +6,7 @@ import {
   Popover,
   Text,
   ThemeIcon,
+  Box,
   createStyles,
 } from '@mantine/core';
 import { NextLink } from '@mantine/next';
@@ -19,6 +19,9 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
+    alignContent: 'center',
+    justifyContent: 'center',
+    paddingBottom: 20,
   },
   navContainer: {
     maxWidth: 1200,
@@ -48,6 +51,7 @@ const Navbar = () => {
     'Odia',
     'Assamese',
   ];
+
   return (
     <Box className={classes.navWrapper}>
       <Flex p={20} justify="space-between" align="center" className={classes.navContainer}>
@@ -61,11 +65,21 @@ const Navbar = () => {
             </Text>
           </Flex>
         </NextLink>
-        <Input icon={<IconSearch size={20} />} w="100%" maw={500} placeholder="Search Music" />
+
+        <Input
+          icon={<IconSearch size={20} />}
+          w="100%"
+          mx={20}
+          maw={500}
+          display={{ base: 'none', xs: 'block' }}
+          placeholder="Search Music"
+        />
 
         <Popover width={300} position="bottom" withArrow shadow="md">
           <Popover.Target>
-            <Button variant="light">Music Language</Button>
+            <Button variant="light" leftIcon={<IconLanguage size={20} />}>
+              Music Language
+            </Button>
           </Popover.Target>
           <Popover.Dropdown>
             <Text size="sm" mb={10}>
@@ -81,6 +95,14 @@ const Navbar = () => {
           </Popover.Dropdown>
         </Popover>
       </Flex>
+      <Input
+        icon={<IconSearch size={20} />}
+        w="90%"
+        mx={20}
+        maw={500}
+        display={{ base: 'block', xs: 'none' }}
+        placeholder="Search Music"
+      />
     </Box>
   );
 };

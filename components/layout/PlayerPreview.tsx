@@ -35,7 +35,15 @@ const PlayerPreview = () => {
             style={{ borderRadius: '4px' }}
           />
           <Box>
-            <Text dangerouslySetInnerHTML={{ __html: data?.name }} />
+            <Text
+              sx={{
+                maxWidth: '200px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+              dangerouslySetInnerHTML={{ __html: data?.name }}
+            />
             <Text
               sx={(theme) => ({
                 fontSize: theme.fontSizes.sm,

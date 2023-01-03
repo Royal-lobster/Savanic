@@ -10,6 +10,7 @@ export enum PathOptions {
   modules = 'modules',
   albums = 'albums',
   songs = 'songs',
+  playlists = 'playlists',
 }
 
 type Data<T extends PathOptions> = T extends PathOptions.modules
@@ -18,6 +19,8 @@ type Data<T extends PathOptions> = T extends PathOptions.modules
   ? AlbumData
   : T extends PathOptions.songs
   ? SongData[]
+  : T extends PathOptions.playlists
+  ? AlbumData
   : never;
 
 const useSaavn = <T extends PathOptions>(path: T, queries: Record<string, string>) => {

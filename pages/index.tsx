@@ -13,6 +13,7 @@ export default function HomePage() {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
 
+  console.log(data.charts);
   return (
     <Stack spacing={40}>
       <Trending data={data.trending} />

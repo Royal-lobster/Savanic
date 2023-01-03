@@ -11,6 +11,9 @@ const useStyles = createStyles(() => ({
   footer: {
     marginTop: 'auto',
   },
+  content: {
+    minHeight: 'calc(100vh - 360px)',
+  },
   player: {
     position: 'sticky',
     bottom: 0,
@@ -30,7 +33,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Stack className={classes.layoutWrapper}>
       <Navbar />
-      <Box maw={1200} mx="auto" w="100%" p={20}>
+      <Box className={classes.content} maw={1200} mx="auto" w="100%" p={20}>
         {children}
       </Box>
       <Box className={classes.player}>

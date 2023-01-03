@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Loader, Text } from '@mantine/core';
+import { Flex, Loader, Stack, Text } from '@mantine/core';
 import { IconPlayerPause } from '@tabler/icons';
 import { Song } from '../../types/album';
 import { usePlayerStore } from '../../state/player';
@@ -26,6 +26,9 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
       <Text
         sx={(theme) => ({
           flex: 0.2,
+          '@media (max-width: 755px)': {
+            flex: 0.3,
+          },
           display: 'flex',
           justifyContent: 'start',
           alignItems: 'center',
@@ -42,11 +45,37 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
           id
         )}
       </Text>
+      <Stack
+        spacing={0}
+        sx={{
+          flex: 1,
+          '@media (max-width: 755px)': {
+            flex: 2,
+          },
+        }}
+      >
+        <Text
+          sx={(theme) => ({
+            color: isCurrent ? theme.colors.blue[6] : 'unset',
+          })}
+          dangerouslySetInnerHTML={{ __html: song.name }}
+        />
+        <Text
+          display={{ base: 'block', md: 'none' }}
+          sx={(theme) => ({
+            fontSize: theme.fontSizes.xs,
+            textAlign: 'left',
+            textOverflow: 'ellipsis',
+            maxWidth: '100%',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+          })}
+        >
+          {song.primaryArtists}
+        </Text>
+      </Stack>
       <Text
-        sx={(theme) => ({ flex: 1, color: isCurrent ? theme.colors.blue[6] : 'unset' })}
-        dangerouslySetInnerHTML={{ __html: song.name }}
-      />
-      <Text
+        display={{ base: 'none', md: 'block' }}
         sx={{
           flex: 1,
           textAlign: 'center',
@@ -58,7 +87,17 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
       >
         {song.primaryArtists}
       </Text>
-      <Text sx={{ flex: 1, textAlign: 'right' }}>{(Number(song.duration) / 60).toFixed(2)}</Text>
+      <Text
+        sx={{
+          flex: 1,
+          '@media (max-width: 755px)': {
+            flex: 0.2,
+          },
+          textAlign: 'right',
+        }}
+      >
+        {(Number(song.duration) / 60).toFixed(2)}
+      </Text>
     </Flex>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Card, SimpleGrid, Text, Title } from '@mantine/core';
 import Image from 'next/image';
+import { NextLink } from '@mantine/next';
 import type { Chart } from '../../types/modules';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
 
@@ -20,20 +21,28 @@ const Charts = ({ data }: { data: Chart[] }) => (
       ]}
     >
       {data.map((chart) => (
-        <Card key={chart.id}>
-          <Card.Section mb={10} sx={{ position: 'relative', height: 180 }}>
-            <Image
-              src={getImageSrc(chart.image, ImageSize.LARGE) as string}
-              layout="fill"
-              objectFit="cover"
-              alt="Norway"
-            />
-          </Card.Section>
-          <Text>{chart.title}</Text>
-          <Text size="sm" color="gray">
-            {chart.subtitle}
-          </Text>
-        </Card>
+        <NextLink
+          href={`/playlist/${chart.id}`}
+          style={{
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
+          <Card key={chart.id}>
+            <Card.Section mb={10} sx={{ position: 'relative', height: 180 }}>
+              <Image
+                src={getImageSrc(chart.image, ImageSize.LARGE) as string}
+                layout="fill"
+                objectFit="cover"
+                alt="Norway"
+              />
+            </Card.Section>
+            <Text>{chart.title}</Text>
+            <Text size="sm" color="gray">
+              {chart.subtitle}
+            </Text>
+          </Card>
+        </NextLink>
       ))}
     </SimpleGrid>
   </Box>
