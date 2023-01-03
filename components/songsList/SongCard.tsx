@@ -21,6 +21,7 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
         },
       })}
       justify="space-between"
+      align="center"
       onClick={() => setSongData(song)}
     >
       <Text
@@ -47,6 +48,7 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
       </Text>
       <Stack
         spacing={0}
+        justify="center"
         sx={{
           flex: 0.8,
           '@media (max-width: 580px)': {
