@@ -4,10 +4,17 @@ import { IconPlayerPause } from '@tabler/icons';
 import { Song } from '../../types/album';
 import { usePlayerStore } from '../../state/player';
 
-export const SongCard = ({ song, id }: { song: Song; id: number }) => {
+export const SongCard = ({
+  song,
+  id,
+  playSong,
+}: {
+  song: Song;
+  id: number;
+  playSong: () => void;
+}) => {
   const isCurrent = usePlayerStore((state) => state.songData?.id) === song.id;
   const isPaused = usePlayerStore((state) => state.isPaused);
-  const setSongData = usePlayerStore((state) => state.setSongData);
 
   return (
     <Flex
@@ -22,7 +29,7 @@ export const SongCard = ({ song, id }: { song: Song; id: number }) => {
       })}
       justify="space-between"
       align="center"
-      onClick={() => setSongData(song)}
+      onClick={playSong}
     >
       <Text
         sx={(theme) => ({

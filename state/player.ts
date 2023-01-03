@@ -11,6 +11,8 @@ export interface PlayerStore {
 export const usePlayerStore = create<PlayerStore>((set) => ({
   isPaused: false,
   songData: null,
-  setSongData: (songData: Song) => set({ songData }),
+  setSongData: (songData: Song) => {
+    set({ songData });
+  },
   setIsPaused: (isPaused: boolean) => set({ isPaused }),
 }));

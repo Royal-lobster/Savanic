@@ -42,4 +42,8 @@ const useSaavn = <T extends PathOptions>(path: T, queries: Record<string, string
   };
 };
 
+export const fetchSaavnSong = (id: string) =>
+  fetch(`https://savanic-backend.vercel.app/songs?id=${id}`)
+    .then((res) => res.json())
+    .then((res: { data: SongData[] }) => res.data[0]);
 export default useSaavn;

@@ -10,38 +10,51 @@ import {
 import { usePlayerStore } from '../../state/player';
 import { ImageSize, getImageSrc } from '../../utils/getImageSrc';
 import { getAudioSrc } from '../../utils/getAudioSrc';
+import { useQueueStore } from '../../state/queue';
+import { fetchSaavnSong } from '../../hooks/useSaavn';
 
 const PlayerPreview = () => {
   const [progress, setProgress] = React.useState(0);
+
   const isPaused = usePlayerStore((state) => state.isPaused);
   const setIsPaused = usePlayerStore((state) => state.setIsPaused);
   const data = usePlayerStore((state) => state.songData);
+  const setSongData = usePlayerStore((state) => state.setSongData);
+
+  const nextSong = useQueueStore((state) => state.nextSong);
+  const previousSong = useQueueStore((state) => state.previousSong);
+  const popPreviousQueue = useQueueStore((state) => state.popPreviousQueue);
+  const popQueue = useQueueStore((state) => state.popQueue);
 
   const audioPlayer = useMemo(() => {
     if (!data) return null;
     const audioSrc = getAudioSrc(data.downloadUrl);
     return new Audio(audioSrc);
-  }, [data]);
+  }, [data, nextSong]);
+
+  const onPrev = () => {
+    popPreviousQueue();
+    if (previousSong) fetchSaavnSong(previousSong).then((song) => setSongData(song));
+  };
+
+  const onNext = () => {
+    popQueue();
+    if (nextSong) fetchSaavnSong(nextSong).then((song) => setSongData(song));
+  };
 
   useEffect(() => {
     if (audioPlayer) {
       setProgress(0);
       setIsPaused(false);
-      audioPlayer.currentTime = 0;
 
+      audioPlayer.currentTime = 0;
       audioPlayer.ontimeupdate = () => setProgress(audioPlayer.currentTime);
+      audioPlayer.onended = onNext;
+
       audioPlayer.play();
     }
     return () => audioPlayer?.pause();
   }, [audioPlayer]);
-
-  const onPrev = () => {
-    throw new Error('Not implemented');
-  };
-
-  const onNext = () => {
-    throw new Error('Not implemented');
-  };
 
   const onPlayToggle = () => {
     if (isPaused) {
