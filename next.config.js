@@ -7,4 +7,7 @@ module.exports = withBundleAnalyzer({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ['c.saavncdn.com'],
+  },
 });

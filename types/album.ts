@@ -1,0 +1,59 @@
+export interface Root {
+  status: string;
+  message: any;
+  data: AlbumData;
+}
+
+export interface AlbumData {
+  id: string;
+  name: string;
+  year: string;
+  releaseDate: string;
+  songCount: string;
+  url: string;
+  primaryArtistsId: string;
+  primaryArtists: string;
+  featuredArtists: any[];
+  artists: any[];
+  image: Image[];
+  songs: Song[];
+}
+
+export interface Image {
+  quality: string;
+  link: string;
+}
+
+export interface Song {
+  id: string;
+  name: string;
+  type: string;
+  album: Album;
+  year: string;
+  releaseDate: string;
+  duration: string;
+  label: string;
+  primaryArtists: string;
+  primaryArtistsId: string;
+  featuredArtists: string;
+  featuredArtistsId: string;
+  explicitContent: number;
+  playCount: string;
+  language: string;
+  hasLyrics: string;
+  url: string;
+  copyright: string;
+  image: Image[];
+  downloadUrl: DownloadUrl[];
+}
+
+export interface Album {
+  id: string;
+  name: string;
+  url: string;
+}
+
+export interface DownloadUrl {
+  quality: string;
+  link: string;
+}
